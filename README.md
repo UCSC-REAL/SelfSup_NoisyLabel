@@ -1,5 +1,5 @@
-# Demystifying How Self-Supervised Features Improve Training from Noisy Labels
-This code is a PyTorch implementation of the paper "[Demystifying How Self-Supervised Features Improve Training from Noisy Labels]".
+# Mitigating Memorization of Noisy Labels via Regularization between Representations
+This code is a PyTorch implementation of the paper "[Mitigating Memorization of Noisy Labels via Regularization between Representations]".
 The code is run on the Tesla V-100.
 ## Prerequisites
 Python 3.8.5
