@@ -57,7 +57,7 @@ python GCE_Reg.py  --reg rkd_dis --noise_type symmetric --noise_rate 0.6 --epoch
 
 For CIFAR100, we use warmup to first get a better encoder when applying each method. "--base" indicates running method without regularizer. For example, To run GCE without regularizer: 
 ```
-python GCE_C100.py  --reg rkd_dis --noise_type symmetric --noise_rate 0.8 --epochs 150 --base
+python GCE_C100.py  --noise_type symmetric --noise_rate 0.8 --epochs 150 --base
 ```
 To run GCE with regularizer: 
 ```
