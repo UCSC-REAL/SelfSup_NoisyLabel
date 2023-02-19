@@ -1,5 +1,5 @@
 # Mitigating Memorization of Noisy Labels via Regularization between Representations
-This code is a PyTorch implementation of the paper "[Mitigating Memorization of Noisy Labels via Regularization between Representations](https://arxiv.org/abs/2110.09022)".
+This code is a PyTorch implementation of the paper "[Mitigating Memorization of Noisy Labels via Regularization between Representations](https://openreview.net/pdf?id=6qcYDVlVLnK)" accepted to ICLR 2023.
 The code is run on the Tesla V-100.
 ## Prerequisites
 Python 3.8.5
@@ -39,6 +39,29 @@ python CE.py --simclr_pretrain --down_sample --finetune_fc_only --noise_type ins
 Run command below:
 ```
 python CE_Reg.py --reg rkd_dis --noise_type symmetric --noise_rate 0.6 --epochs 150 
+```
+
+### GCE without regularizer on symm. label noise (random initialization):
+Run command below:
+```
+python GCE.py  --noise_type symmetric --noise_rate 0.6 --epochs 150 
+```
+
+### GCE with regularizer on symm. label noise (random initialization):
+Run command below:
+```
+python GCE_Reg.py  --reg rkd_dis --noise_type symmetric --noise_rate 0.6 --epochs 150 
+```
+
+### CIFAF100
+
+For CIFAR100, we use warmup to first get a better encoder when applying each method. "--base" indicates running method without regularizer. For example, To run GCE without regularizer: 
+```
+python GCE_C100.py  --reg rkd_dis --noise_type symmetric --noise_rate 0.8 --epochs 150 --base
+```
+To run GCE with regularizer: 
+```
+python GCE_C100.py  --reg rkd_dis --noise_type symmetric --noise_rate 0.8 --epochs 150
 ```
 
 
