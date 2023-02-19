@@ -25,7 +25,7 @@ from cifar_noisy import CIFAR10_noisy
 from sklearn import manifold
 from model import Model
 import numpy as np
-from loss import elr_loss,RkdDistance, RKdAngle,Info_NCE, Colearning_Distance
+from loss import RkdDistance, RKdAngle,Info_NCE
 
 np.random.seed(0)
 
@@ -148,8 +148,31 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 model.cuda()
 
 
+class elr_loss(nn.Module):
+    def __init__(self, num_examp, num_classes=100, beta=0.7):
+        super(elr_loss, self).__init__()
+        self.num_classes = num_classes
+        self.USE_CUDA = torch.cuda.is_available()
+        self.target = torch.zeros(num_examp, self.num_classes).cuda() if self.USE_CUDA else torch.zeros(num_examp, self.num_classes)
+        self.beta = beta
+        
 
-reg_factory = {'rkd_dis':RkdDistance(),'rkd_angle':RKdAngle(),'col_dis':Colearning_Distance}
+    def forward(self, index, output, label):
+        y_pred = F.softmax(output,dim=1)
+        y_pred = torch.clamp(y_pred, 1e-4, 1.0-1e-4)
+        y_pred_ = y_pred.data.detach()
+        self.target[index] = self.beta * self.target[index] + (1-self.beta) * ((y_pred_)/(y_pred_).sum(dim=1,keepdim=True))
+        ce_loss = F.cross_entropy(output, label)
+        elr_reg = ((1-(self.target[index] * y_pred).sum(dim=1)).log()).mean()
+        final_loss = ce_loss +  3*elr_reg
+        return  final_loss
+
+
+
+
+
+
+reg_factory = {'rkd_dis':RkdDistance(),'rkd_angle':RKdAngle()}
 #base_loss = nn.CrossEntropyLoss()
 self_criterion = Info_NCE() 
 reg_criterion = reg_factory[args.reg]
