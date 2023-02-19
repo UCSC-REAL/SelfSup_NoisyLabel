@@ -27,7 +27,7 @@ from cifar_noisy import CIFAR100_noisy
 from sklearn import manifold
 from model import Model
 import numpy as np
-from loss import RkdDistance, RKdAngle,Info_NCE, Colearning_Distance
+from loss import RkdDistance, RKdAngle,Info_NCE
 
 np.random.seed(0)
 
