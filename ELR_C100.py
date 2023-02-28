@@ -152,7 +152,7 @@ model.cuda()
 
 
 
-reg_factory = {'rkd_dis':RkdDistance(),'rkd_angle':RKdAngle(),'col_dis':Colearning_Distance}
+reg_factory = {'rkd_dis':RkdDistance(),'rkd_angle':RKdAngle()}
 #base_loss = nn.CrossEntropyLoss()
 self_criterion = Info_NCE() 
 reg_criterion = reg_factory[args.reg]
